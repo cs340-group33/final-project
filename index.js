@@ -1,42 +1,34 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const { pool } = require('./config')
+const express = require('express');
+const path = require('path');
+const generatePassword = require('password-generator');
 
-const app = express()
+const app = express();
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cors())
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-const getBooks = (request, response) => {
-  pool.query('SELECT * FROM books', (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).json(results.rows)
-  })
-}
+// Put all API endpoints under '/api'
+app.get('/api/passwords', (req, res) => {
+  const count = 5;
 
-const addBook = (request, response) => {
-  const { author, title } = request.body
+  // Generate some passwords
+  const passwords = Array.from(Array(count).keys()).map(i =>
+    generatePassword(12, false)
+  )
 
-  pool.query('INSERT INTO books (author, title) VALUES ($1, $2)', [author, title], error => {
-    if (error) {
-      throw error
-    }
-    response.status(201).json({ status: 'success', message: 'Book added.' })
-  })
-}
+  // Return them as json
+  res.json(passwords);
 
-app
-  .route('/books')
-  // GET endpoint
-  .get(getBooks)
-  // POST endpoint
-  .post(addBook)
+  console.log(`Sent ${count} passwords`);
+});
 
-// Start server
-app.listen(process.env.PORT || 3002, () => {
-  console.log(`Server listening`)
-})
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
+
+const port = process.env.PORT || 5000;
+app.listen(port);
+
+console.log(`Password generator listening on ${port}`);
