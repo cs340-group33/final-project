@@ -13,6 +13,7 @@ class SplashPage extends React.Component {
   render() {
     return (
       <SplashContainer>
+        <div>TEST FOR UPDATE</div>
           <div>Welcome to the CS340_401 Group 33
             <br/>Theater Management App</div>
           <Link to='/dashboard'>Click Here To Continue</Link>
