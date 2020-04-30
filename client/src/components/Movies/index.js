@@ -37,7 +37,7 @@ class Movies extends React.Component {
         <RightBox>
           <RightContentBox>
             <RCBHeader>
-              <div>CONTENT HEADER</div>
+              <div>Manage Movies</div>
             </RCBHeader>
             <RCBContent>
               <TheaterTable>

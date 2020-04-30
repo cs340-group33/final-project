@@ -18,18 +18,23 @@ class Theaters extends React.Component {
         <RightBox>
           <RightContentBox>
             <RCBHeader>
-              <div>CONTENT HEADER</div>
+              <div>Manage Theaters</div>
             </RCBHeader>
             <RCBContent>
               <TheaterTable>
-                <tr>
-                  <th>Theater Name</th>
-                  <th>Street</th>
-                  <th>City</th>
-                  <th>ZIP</th>
-                  <th>State</th>
-                  <th>Edit</th>
-                </tr>
+                <table>
+                  <thead>
+                  <tr>
+                    <th>Theater Name</th>
+                    <th>Street</th>
+                    <th>City</th>
+                    <th>ZIP</th>
+                    <th>State</th>
+                    <th>Edit</th>
+                  </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
               </TheaterTable>
             </RCBContent>
           </RightContentBox>

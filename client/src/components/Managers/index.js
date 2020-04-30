@@ -22,11 +22,16 @@ class Managers extends React.Component {
             </RCBHeader>
             <RCBContent>
               <TheaterTable>
-                <tr>
-                  <th>Manager Name</th>
-                  <th>Theaters Managing</th>
-                  <th>Edit</th>
-                </tr>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Manager Name</th>
+                      <th>Theaters Managing</th>
+                      <th>Edit</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
               </TheaterTable>
             </RCBContent>
           </RightContentBox>

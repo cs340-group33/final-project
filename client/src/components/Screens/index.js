@@ -18,17 +18,22 @@ class Screens extends React.Component {
         <RightBox>
           <RightContentBox>
             <RCBHeader>
-              <div>CONTENT HEADER</div>
+              <div>Manage Screens</div>
             </RCBHeader>
             <RCBContent>
               <TheaterTable>
-                <tr>
-                  <th>Theater Name</th>
-                  <th>Screen Number</th>
-                  <th>Seats</th>
-                  <th>IMAX</th>
-                  <th>Edit</th>
-                </tr>
+                <table>
+                  <thead>
+                  <tr>
+                    <th>Theater Name</th>
+                    <th>Screen Number</th>
+                    <th>Seats</th>
+                    <th>IMAX</th>
+                    <th>Edit</th>
+                  </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
               </TheaterTable>
             </RCBContent>
           </RightContentBox>

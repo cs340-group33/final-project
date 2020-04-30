@@ -17,7 +17,7 @@ class SideBarNav extends React.Component {
         </ListHeader>
         <LinkList>
           <ul>
-            <li><Link to="/">Home</Link></li>
+            <li><Link to="/dashboard">Home</Link></li>
             <li><Link to="/managers">Managers</Link></li>
             <li><Link to="/theaters">Theaters</Link></li>
             <li><Link to="/screens">Screens</Link></li>
@@ -31,13 +31,13 @@ class SideBarNav extends React.Component {
 
 const LeftBox = styled.div`
   display: flex;
-  width: 15vw;
+  width: 17vw;
   align-items: center;
   flex-direction: column;
   background: #32a4a8;
   color: #fff;
   font-size: 16px;
-  padding-top: 7.5vh;
+  padding: 7.5vh 15px 0 15px;
 `;
 
 const AttributeImage =styled.div`
