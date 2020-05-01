@@ -18,8 +18,8 @@ class SideBarNav extends React.Component {
         <LinkList>
           <ul>
             <li><Link to="/dashboard">Home</Link></li>
-            <li><Link to="/managers">Managers</Link></li>
             <li><Link to="/theaters">Theaters</Link></li>
+            <li><Link to="/managers">Managers</Link></li>
             <li><Link to="/screens">Screens</Link></li>
             <li><Link to="/movies">Movies</Link></li>
           </ul>

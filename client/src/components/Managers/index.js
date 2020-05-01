@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
+import Button from '@material-ui/core/Button';
 
 
 class Managers extends React.Component {
@@ -8,6 +9,10 @@ class Managers extends React.Component {
     super(props);
     this.state = {
     };
+  }
+  handleSubmit(event){
+    event.preventDefault();
+    const newManager = new FormData(event.target);
   }
 
   render() {
@@ -18,7 +23,7 @@ class Managers extends React.Component {
         <RightBox>
           <RightContentBox>
             <RCBHeader>
-              <div>CONTENT HEADER</div>
+              <div>Managers</div>
             </RCBHeader>
             <RCBContent>
               <TheaterTable>
@@ -27,11 +32,25 @@ class Managers extends React.Component {
                     <tr>
                       <th>Manager Name</th>
                       <th>Theaters Managing</th>
-                      <th>Edit</th>
+                      <th>Edit/Delete</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
                 </table>
+                <AddItemForm>
+                  <form onSubmit={this.handleSubmit}>
+                    <FormHeading>Add New Manager Information</FormHeading>
+                    <label htmlFor="first_name">First Name:</label>
+                    <input id="first_name" name="first_name" type="text" />
+                    <br/>
+                    <label htmlFor="last_name">Last Name:</label>
+                    <input id="last_name" name="last_name" type="text" />
+                    <br/>
+                    <Button variant="contained" color="primary" size="small">
+                      Add Manager
+                    </Button>
+                  </form>
+                </AddItemForm>
               </TheaterTable>
             </RCBContent>
           </RightContentBox>
@@ -89,6 +108,19 @@ const RCBContent = styled.div`
   font-weight: 400;
   color: #2C3A41;
   margin-bottom: 32px;
+`;
+
+const AddItemForm = styled.div`
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  padding: 5px 5px 5px 5px;
+`;
+
+const FormHeading = styled.div`
+  display: flex;
+  padding-bottom: 5px;
+  padding-top: 5px;
 `;
 
 export default Managers;

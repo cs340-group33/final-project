@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
+import Button from '@material-ui/core/Button';
 
 
 class Screens extends React.Component {
@@ -8,6 +9,11 @@ class Screens extends React.Component {
     super(props);
     this.state = {
     };
+  }
+
+  handleSubmit(event){
+    event.preventDefault();
+    const newScreen = new FormData(event.target);
   }
 
   render() {
@@ -29,7 +35,7 @@ class Screens extends React.Component {
                     <th>Screen Number</th>
                     <th>Seats</th>
                     <th>IMAX</th>
-                    <th>Edit</th>
+                    <th>Edit/Delete</th>
                   </tr>
                   </thead>
                   <tbody></tbody>

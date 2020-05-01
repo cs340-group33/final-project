@@ -3,13 +3,20 @@ import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
 import axios from 'axios';
 import Table from "../../Shared/Table";
+import Button from '@material-ui/core/Button';
 
 class Movies extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: '',
       data: []
     };
+  }
+
+  handleSubmit(event){
+    event.preventDefault();
+    const newMovie = new FormData(event.target);
   }
 
   /*componentDidMount() {
@@ -46,18 +53,25 @@ class Movies extends React.Component {
                     <tr>
                       <th>Movie Title</th>
                       <th>Theater</th>
-                      <th>Edit</th>
+                      <th>Edit/Delete</th>
                     </tr>
                   </thead>
                    <tbody>
                     <tr>
-                      <td>1</td>
-                      <td>2</td>
-                      <td>3</td>
                     </tr>
                    </tbody>
                 </table>
               </TheaterTable>
+              <AddItemForm>
+                <form onSubmit={this.handleSubmit}>
+                  <FormHeading>New Movie Title:</FormHeading>
+                  <input id="movieTitle" name="movieTitle" type="text"/>
+                  <br/><br/>
+                  <Button variant="contained" color="primary" size="small">
+                    Add New Movie
+                  </Button>
+                </form>
+              </AddItemForm>
             </RCBContent>
           </RightContentBox>
         </RightBox>
@@ -83,6 +97,7 @@ const TheaterTable = styled.div`
    border: 1px solid black;
    padding: 5px;
   }
+  padding-bottom: 20px;
 `;
 
 const RightBox = styled.div`
@@ -115,5 +130,19 @@ const RCBContent = styled.div`
   color: #2C3A41;
   margin-bottom: 32px;
 `;
+
+const AddItemForm = styled.div`
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  padding: 5px 5px 5px 5px;
+`;
+
+const FormHeading = styled.div`
+  display: flex;
+  padding-bottom: 5px;
+  padding-top: 5px;
+`;
+
 
 export default Movies;
