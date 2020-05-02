@@ -13,10 +13,11 @@ class SplashPage extends React.Component {
   render() {
     return (
       <SplashContainer>
-        <div>TEST FOR UPDATE</div>
+        <SplashPageText>
           <div>Welcome to the CS340_401 Group 33
             <br/>Theater Management App</div>
           <Link to='/dashboard'>Click Here To Continue</Link>
+        </SplashPageText>
       </SplashContainer>
     )
   }
@@ -28,8 +29,18 @@ const SplashContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #3ASDF5;
-  background-color:#32a4a8;
+  background-color:#6ab4d9;
+`;
+
+const SplashPageText = styled.div`
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 25px 25px 25px 25px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color:#FFF;
   text-align:center;
   font-size: 24px;
   font-weight: 700;

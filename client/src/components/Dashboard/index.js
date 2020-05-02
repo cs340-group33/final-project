@@ -45,7 +45,7 @@ const RightBox = styled.div`
   align-items: center;
   width: 85vw;
   height: 100vh;
-  background-color:#E3F2FD;
+  background-color:#ebf1f5;
 `;
 
 const RightContentBox = styled.div`
@@ -53,6 +53,8 @@ const RightContentBox = styled.div`
   flex-direction: column;
   background-color: #FFFFFF;
   padding: 20px 20px 20px 20px;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const RCBHeader = styled.div`

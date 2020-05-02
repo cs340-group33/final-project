@@ -1,19 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
-import Button from '@material-ui/core/Button';
-
+import { Button, ButtonGroup } from '@material-ui/core';
 
 class Theaters extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      age:''
     };
   }
 
   handleSubmit(event){
     event.preventDefault();
     const newTheater = new FormData(event.target);
+  }
+  handleChange(event){
+    event.preventDefault();
+    this.setState({age: event.target.value});
   }
 
   render() {
@@ -35,31 +39,47 @@ class Theaters extends React.Component {
                     <th>Street</th>
                     <th>City</th>
                     <th>ZIP</th>
-                    <th>Edit/Delete</th>
+                    <th>Select</th>
                   </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                    <tr>
+                      <td>Test Data</td>
+                      <td>Test Data</td>
+                      <td>Test Data</td>
+                      <td>Test Data</td>
+                      <td>
+                        <ButtonGroup color="primary" aria-label="small outlined primary button group">
+                        <Button>Select</Button>
+                        <Button>Edit</Button>
+                        <Button>Delete</Button>
+                        </ButtonGroup>
+                        </td>
+                    </tr>
+                  </tbody>
                 </table>
               </TheaterTable>
-              <AddItemForm>
-                <form onSubmit={this.handleSubmit}>
+              <AddItemForm onSubmit={this.handleSubmit}>
                   <FormHeading>Add New Theater Information</FormHeading>
-                  <label htmlFor="name">Name:</label>
-                  <input id="name" name="name" type="text" />
-                  <br/>
-                  <label htmlFor="street">Street:</label>
-                  <input id="street" name="street" type="text" />
-                  <br/>
-                  <label htmlFor="city">City:</label>
-                  <input id="city" name="city" type="text" />
-                  <br/>
-                  <label htmlFor="zip">ZIP:</label>
-                  <input id="zip" name="zip" type="num" />
-                  <br/>
+                  <FWrapper>
+                  <FHeading htmlFor="name">Name:</FHeading>
+                  <FInput id="name" name="name" type="text" />
+                  </FWrapper>
+                  <FWrapper>
+                  <FHeading htmlFor="street">Street:</FHeading>
+                  <FInput id="street" name="street" type="text" />
+                  </FWrapper>
+                  <FWrapper>
+                  <FHeading htmlFor="city">City:</FHeading>
+                  <FInput id="city" name="city" type="text" />
+                  </FWrapper>
+                  <FWrapper>
+                  <FHeading htmlFor="zip">ZIP:</FHeading>
+                  <FInput id="zip" name="zip" type="num" />
+                  </FWrapper>
                   <Button variant="contained" color="primary" size="small">
                     Add Theater
                   </Button>
-                </form>
               </AddItemForm>
             </RCBContent>
           </RightContentBox>
@@ -95,7 +115,7 @@ const RightBox = styled.div`
   align-items: center;
   width: 85vw;
   height: 100vh;
-  background-color:#E3F2FD;
+  background-color:#ebf1f5;
 `;
 
 const RightContentBox = styled.div`
@@ -103,9 +123,13 @@ const RightContentBox = styled.div`
   flex-direction: column;
   background-color: #FFFFFF;
   padding: 20px 20px 20px 20px;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const RCBHeader = styled.div`
+  display:flex;
+  flex-direction: column;
   font-size: 36px;
   font-weight: 400;
   color: #2C3A41;
@@ -113,6 +137,8 @@ const RCBHeader = styled.div`
 `;
 
 const RCBContent = styled.div`
+  display:flex;
+  flex-direction: column;
   font-size: 14px;
   font-weight: 400;
   color: #2C3A41;
@@ -121,7 +147,8 @@ const RCBContent = styled.div`
 
 
 const AddItemForm = styled.div`
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   font-weight: 600;
   padding: 5px 5px 5px 5px;
 `;
@@ -130,6 +157,24 @@ const FormHeading = styled.div`
   display: flex;
   padding-bottom: 5px;
   padding-top: 5px;
+`;
+
+const FWrapper = styled.div`
+  display: inline-block;
+  margin-bottom: 16px;
+`;
+
+const FHeading = styled.div`
+  color: #212b31;
+  margin-bottom: 5px;
+`;
+
+const FInput = styled.input`
+  box-sizing: border-box;
+  border-radius: 3px;  
+  font-size: 14px;
+  width: 10vw;
+  padding-left: 8px;
 `;
 
 

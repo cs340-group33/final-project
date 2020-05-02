@@ -10,6 +10,7 @@ import Theaters from "./components/Theaters";
 import Managers from "./components/Managers";
 import Movies from "./components/Movies";
 import Screens from "./components/Screens";
+import Showing from "./components/Showing";
 
 
 
@@ -31,6 +32,9 @@ function App() {
         </Route>
         <Route path="/movies">
           <Movies/>
+        </Route>
+        <Route path="/showings">
+          <Showing/>
         </Route>
         <Route path="/">
           <SplashPage />

@@ -21,6 +21,7 @@ class SideBarNav extends React.Component {
             <li><Link to="/theaters">Theaters</Link></li>
             <li><Link to="/managers">Managers</Link></li>
             <li><Link to="/screens">Screens</Link></li>
+            <li><Link to="/showings">Showings</Link></li>
             <li><Link to="/movies">Movies</Link></li>
           </ul>
         </LinkList>
@@ -34,9 +35,10 @@ const LeftBox = styled.div`
   width: 17vw;
   align-items: center;
   flex-direction: column;
-  background: #32a4a8;
-  color: #fff;
+  background: #a2e8eb;
+  color: #000000;
   font-size: 16px;
+  font-weight: 600;
   padding: 7.5vh 15px 0 15px;
 `;
 
@@ -69,13 +71,13 @@ const LinkList = styled.div`
   };
   ul li a {
     text-decoration:none;
-    color:#FFFFFF;
-    background-color:#32a4a8;
+    color:#000000;
+    background-color:#a2e8eb;
     padding: 5px 10px 5px 10px;
   };
 
   ul li a:hover {
-    background-color:#39667d;
+    background-color:#6ab4d9;
   };
   ul:after {
     content: "";

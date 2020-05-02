@@ -4,16 +4,18 @@ import SideBarNav from "../../Shared/SideNavBar";
 import { Button, ButtonGroup } from '@material-ui/core';
 
 
-class Managers extends React.Component {
+class Showing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
     };
   }
+
   handleSubmit(event){
     event.preventDefault();
-    const newManager = new FormData(event.target);
+    const newScreen = new FormData(event.target);
   }
+
   handleChange(event){
     event.preventDefault();
     this.setState({age: event.target.value});
@@ -27,47 +29,47 @@ class Managers extends React.Component {
         <RightBox>
           <RightContentBox>
             <RCBHeader>
-              <div>Managers</div>
+              <div>Manage Showings</div>
             </RCBHeader>
             <RCBContent>
               <TheaterTable>
                 <table>
                   <thead>
-                    <tr>
-                      <th>Manager Name</th>
-                      <th>Theaters Managing</th>
-                      <th>Select</th>
-                    </tr>
+                  <tr>
+                    <th>Theater Name</th>
+                    <th>Screen Number</th>
+                    <th>Showing Time</th>
+                    <th>Movie Showing</th>
+                    <th>Edit/Delete</th>
+                  </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Test Data</td>
-                    <td>Test Data</td>
-                    <td>
-                      <ButtonGroup color="primary" aria-label="small outlined primary button group">
-                        <Button>Select</Button>
-                        <Button>Edit</Button>
-                        <Button>Delete</Button>
-                      </ButtonGroup>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>Test Data</td>
+                      <td>Test Data</td>
+                      <td>Test Data</td>
+                      <td>Test Data</td>
+                      <td>
+                        <ButtonGroup color="primary" aria-label="small outlined primary button group">
+                          <Button>Select Movie</Button>
+                          <Button>Edit</Button>
+                          <Button>Delete</Button>
+                        </ButtonGroup>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
-                <AddItemForm onSubmit={this.handleSubmit}>
-                  <FormHeading>Add New Manager Information</FormHeading>
-                  <FWrapper>
-                    <FHeading htmlFor="first_name">First Name:</FHeading>
-                    <FInput id="first_name" name="first_name" type="text" />
-                  </FWrapper>
-                  <FWrapper>
-                    <FHeading htmlFor="last_name">Last Name:</FHeading>
-                    <FInput id="last_name" name="last_name" type="num" />
-                  </FWrapper>
-                  <Button variant="contained" color="primary" size="small">
-                    Add Manager
-                  </Button>
-                </AddItemForm>
               </TheaterTable>
+              <AddItemForm onSubmit={this.handleSubmit}>
+                <FormHeading>Add A New Showing...</FormHeading>
+                <FWrapper>
+                  <FHeading htmlFor="showingTime">Showing Time:</FHeading>
+                  <FInput id="showingTime" name="showingTime" type="text" />
+                </FWrapper>
+                <Button variant="contained" color="primary" size="small">
+                  Add Showing To Selected Screen
+                </Button>
+              </AddItemForm>
             </RCBContent>
           </RightContentBox>
         </RightBox>
@@ -115,8 +117,6 @@ const RightContentBox = styled.div`
 `;
 
 const RCBHeader = styled.div`
-  display: flex;
-  flex-direction: column;
   font-size: 36px;
   font-weight: 400;
   color: #2C3A41;
@@ -124,8 +124,6 @@ const RCBHeader = styled.div`
 `;
 
 const RCBContent = styled.div`
-  display: flex;
-  flex-direction: column;
   font-size: 14px;
   font-weight: 400;
   color: #2C3A41;
@@ -141,7 +139,6 @@ const AddItemForm = styled.div`
 
 const FormHeading = styled.div`
   display: flex;
-  flex-direction: column;
   padding-bottom: 5px;
   padding-top: 5px;
 `;
@@ -165,4 +162,5 @@ const FInput = styled.input`
 `;
 
 
-export default Managers;
+
+export default Showing;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
-import Button from '@material-ui/core/Button';
+import { Button, ButtonGroup } from '@material-ui/core';
 
 
 class Screens extends React.Component {
@@ -14,6 +14,11 @@ class Screens extends React.Component {
   handleSubmit(event){
     event.preventDefault();
     const newScreen = new FormData(event.target);
+  }
+
+  handleChange(event){
+    event.preventDefault();
+    this.setState({age: event.target.value});
   }
 
   render() {
@@ -34,13 +39,37 @@ class Screens extends React.Component {
                     <th>Theater Name</th>
                     <th>Screen Number</th>
                     <th>Seats</th>
-                    <th>IMAX</th>
+                    <th>Open Showings</th>
                     <th>Edit/Delete</th>
                   </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                    <tr>
+                      <td>Test Data</td>
+                      <td>Test Data</td>
+                      <td>Test Data</td>
+                      <td>Test Data</td>
+                      <td>
+                        <ButtonGroup color="primary" aria-label="small outlined primary button group">
+                          <Button>Select</Button>
+                          <Button>Edit</Button>
+                          <Button>Delete</Button>
+                        </ButtonGroup>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </TheaterTable>
+              <AddItemForm onSubmit={this.handleSubmit}>
+                <FormHeading>Add A New Screen...</FormHeading>
+                <FWrapper>
+                  <FHeading htmlFor="showingTime">Number of Seats:</FHeading>
+                  <FInput id="showingTime" name="showingTime" type="text" />
+                </FWrapper>
+                <Button variant="contained" color="primary" size="small">
+                  Add Screen To Selected Theater
+                </Button>
+              </AddItemForm>
             </RCBContent>
           </RightContentBox>
         </RightBox>
@@ -75,7 +104,7 @@ const RightBox = styled.div`
   align-items: center;
   width: 85vw;
   height: 100vh;
-  background-color:#E3F2FD;
+  background-color:#ebf1f5;
 `;
 
 const RightContentBox = styled.div`
@@ -83,6 +112,8 @@ const RightContentBox = styled.div`
   flex-direction: column;
   background-color: #FFFFFF;
   padding: 20px 20px 20px 20px;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const RCBHeader = styled.div`
@@ -98,5 +129,38 @@ const RCBContent = styled.div`
   color: #2C3A41;
   margin-bottom: 32px;
 `;
+
+const AddItemForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  padding: 5px 5px 5px 5px;
+`;
+
+const FormHeading = styled.div`
+  display: flex;
+  padding-bottom: 5px;
+  padding-top: 5px;
+`;
+
+const FWrapper = styled.div`
+  display: inline-block;
+  margin-bottom: 16px;
+`;
+
+const FHeading = styled.div`
+  color: #212b31;
+  margin-bottom: 5px;
+`;
+
+const FInput = styled.input`
+  box-sizing: border-box;
+  border-radius: 3px;  
+  font-size: 14px;
+  width: 10vw;
+  padding-left: 8px;
+`;
+
+
 
 export default Screens;
