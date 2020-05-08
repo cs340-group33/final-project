@@ -82,9 +82,7 @@ const PageContainer = styled.div`
 
 `;
 
-const TableInfo = styled.div`
-  padding-bottom: 20px;
-`;
+
 
 const TheaterTable = styled.div`
    table {

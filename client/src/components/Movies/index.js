@@ -51,6 +51,15 @@ class Movies extends React.Component {
               <div>Manage Movies</div>
             </RCBHeader>
             <RCBContent>
+              <TableInfo>
+                <Button variant="contained" color="primary" size="medium">
+                  Display Movies That Aren't Currently Shown
+                </Button>
+                <br/>
+                <Button variant="contained" color="primary" size="medium">
+                  Display All Movies
+                </Button>
+              </TableInfo>
               <TheaterTable>
                <table>
                   <thead>
@@ -108,6 +117,12 @@ const PageContainer = styled.div`
   justify-content: space-between;
   align-items: stretch;
 
+`;
+
+const TableInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
 `;
 
 const TheaterTable = styled.div`
