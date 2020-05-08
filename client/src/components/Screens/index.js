@@ -40,7 +40,8 @@ class Screens extends React.Component {
                     <th>Screen Number</th>
                     <th>Seats</th>
                     <th>Open Showings</th>
-                    <th>Edit/Delete</th>
+                    <th>Select Showings</th>
+                    <th>Delete</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -50,11 +51,14 @@ class Screens extends React.Component {
                       <td>Test Data</td>
                       <td>Test Data</td>
                       <td>
-                        <ButtonGroup color="primary" aria-label="small outlined primary button group">
-                          <Button>Select</Button>
-                          <Button>Edit</Button>
-                          <Button>Delete</Button>
-                        </ButtonGroup>
+                        <Button variant="contained" color="default" size="small">
+                          Add/Select Showing
+                        </Button>
+                      </td>
+                      <td>
+                        <Button variant="contained" color="secondary" size="small">
+                          Delete
+                        </Button>
                       </td>
                     </tr>
                   </tbody>
@@ -139,8 +143,9 @@ const AddItemForm = styled.div`
 
 const FormHeading = styled.div`
   display: flex;
+  font-size: 24px;
   padding-bottom: 5px;
-  padding-top: 5px;
+  padding-top: 15px;
 `;
 
 const FWrapper = styled.div`

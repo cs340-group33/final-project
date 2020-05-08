@@ -40,7 +40,8 @@ class Showing extends React.Component {
                     <th>Screen Number</th>
                     <th>Showing Time</th>
                     <th>Movie Showing</th>
-                    <th>Edit/Delete</th>
+                    <th>Select Movie</th>
+                    <th>Delete</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -50,11 +51,14 @@ class Showing extends React.Component {
                       <td>Test Data</td>
                       <td>Test Data</td>
                       <td>
-                        <ButtonGroup color="primary" aria-label="small outlined primary button group">
-                          <Button>Select Movie</Button>
-                          <Button>Edit</Button>
-                          <Button>Delete</Button>
-                        </ButtonGroup>
+                        <Button variant="contained" color="default" size="small">
+                          Select
+                        </Button>
+                      </td>
+                      <td>
+                        <Button variant="contained" color="secondary" size="small">
+                          Delete Showing
+                        </Button>
                       </td>
                     </tr>
                   </tbody>
@@ -139,8 +143,9 @@ const AddItemForm = styled.div`
 
 const FormHeading = styled.div`
   display: flex;
+  font-size: 24px;
   padding-bottom: 5px;
-  padding-top: 5px;
+  padding-top: 15px;
 `;
 
 const FWrapper = styled.div`

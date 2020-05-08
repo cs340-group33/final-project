@@ -57,7 +57,7 @@ class Movies extends React.Component {
                     <tr>
                       <th>Movie Title</th>
                       <th>Is Playing</th>
-                      <th>Select</th>
+                      <th>Manage Movie</th>
                     </tr>
                   </thead>
                  <tbody>
@@ -66,7 +66,7 @@ class Movies extends React.Component {
                    <td>Test Data</td>
                    <td>
                      <ButtonGroup color="primary" aria-label="small outlined primary button group">
-                       <Button>Edit</Button>
+                       <Button>Edit Title</Button>
                        <Button>Delete</Button>
                      </ButtonGroup>
                    </td>
@@ -74,6 +74,16 @@ class Movies extends React.Component {
                  </tbody>
                 </table>
               </TheaterTable>
+              <SearchMovie onSubmit={this.handleSubmit}>
+                <FormHeading>Search for a Movie</FormHeading>
+                <FWrapper>
+                  <FHeading htmlFor="movie_title">Movie Title:</FHeading>
+                  <FInput id="movie_title" name="movie_title" type="text" />
+                </FWrapper>
+                <Button variant="contained" color="primary" size="small">
+                  Search
+                </Button>
+              </SearchMovie>
               <AddItemForm onSubmit={this.handleSubmit}>
                 <FormHeading>Add A New Movie...</FormHeading>
                 <FWrapper>
@@ -153,10 +163,18 @@ const AddItemForm = styled.div`
   padding: 5px 5px 5px 5px;
 `;
 
+const SearchMovie = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  padding-bottom: 25px;
+`;
+
 const FormHeading = styled.div`
   display: flex;
+  font-size: 24px;
   padding-bottom: 5px;
-  padding-top: 5px;
+  padding-top: 15px;
 `;
 
 const FWrapper = styled.div`

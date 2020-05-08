@@ -11,7 +11,6 @@ class SideBarNav extends React.Component {
     return (
       <LeftBox>
         <img src={Logo} alt='logo' height='150vh'/>
-        {/*<AttributeImage>Icons made by Freepi <br>from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></AttributeImage>*/}
         <ListHeader>
           Theater Management App
         </ListHeader>
@@ -40,16 +39,6 @@ const LeftBox = styled.div`
   font-size: 16px;
   font-weight: 600;
   padding: 7.5vh 15px 0 15px;
-`;
-
-const AttributeImage =styled.div`
-  text-align: center;
-  font-size: 8px;
-  color: #FFF;
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
 `;
 
 const ListHeader = styled.div`

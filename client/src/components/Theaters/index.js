@@ -31,6 +31,9 @@ class Theaters extends React.Component {
               <div>Manage Theaters</div>
             </RCBHeader>
             <RCBContent>
+              <TableInfo>
+                Selecting a theater in this table will allow you to pick from the available managers to be associated with it...
+              </TableInfo>
               <TheaterTable>
                 <table>
                   <thead>
@@ -40,6 +43,7 @@ class Theaters extends React.Component {
                     <th>City</th>
                     <th>ZIP</th>
                     <th>Select</th>
+                    <th>Delete</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -49,18 +53,21 @@ class Theaters extends React.Component {
                       <td>Test Data</td>
                       <td>Test Data</td>
                       <td>
-                        <ButtonGroup color="primary" aria-label="small outlined primary button group">
-                        <Button>Select</Button>
-                        <Button>Edit</Button>
-                        <Button>Delete</Button>
-                        </ButtonGroup>
+                        <Button variant="contained" color="default" size="small">
+                          Select
+                        </Button>
                         </td>
+                      <td>
+                        <Button variant="contained" color="secondary" size="small">
+                          Delete
+                        </Button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </TheaterTable>
               <AddItemForm onSubmit={this.handleSubmit}>
-                  <FormHeading>Add New Theater Information</FormHeading>
+                  <FormHeading>Add New Theater...</FormHeading>
                   <FWrapper>
                   <FHeading htmlFor="name">Name:</FHeading>
                   <FInput id="name" name="name" type="text" />
@@ -95,6 +102,10 @@ const PageContainer = styled.div`
   justify-content: space-between;
   align-items: stretch;
 
+`;
+
+const TableInfo = styled.div`
+  padding-bottom: 20px;
 `;
 
 const TheaterTable = styled.div`
@@ -155,8 +166,9 @@ const AddItemForm = styled.div`
 
 const FormHeading = styled.div`
   display: flex;
+  font-size: 24px;
   padding-bottom: 5px;
-  padding-top: 5px;
+  padding-top: 15px;
 `;
 
 const FWrapper = styled.div`

@@ -36,7 +36,7 @@ class Managers extends React.Component {
                     <tr>
                       <th>Manager Name</th>
                       <th>Theaters Managing</th>
-                      <th>Select</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -44,17 +44,15 @@ class Managers extends React.Component {
                     <td>Test Data</td>
                     <td>Test Data</td>
                     <td>
-                      <ButtonGroup color="primary" aria-label="small outlined primary button group">
-                        <Button>Select</Button>
-                        <Button>Edit</Button>
-                        <Button>Delete</Button>
-                      </ButtonGroup>
+                      <Button variant="contained" color="secondary" size="small">
+                        Delete
+                      </Button>
                     </td>
                   </tr>
                   </tbody>
                 </table>
                 <AddItemForm onSubmit={this.handleSubmit}>
-                  <FormHeading>Add New Manager Information</FormHeading>
+                  <FormHeading>Add New Manager...</FormHeading>
                   <FWrapper>
                     <FHeading htmlFor="first_name">First Name:</FHeading>
                     <FInput id="first_name" name="first_name" type="text" />
@@ -82,6 +80,10 @@ const PageContainer = styled.div`
   justify-content: space-between;
   align-items: stretch;
 
+`;
+
+const TableInfo = styled.div`
+  padding-bottom: 20px;
 `;
 
 const TheaterTable = styled.div`
@@ -141,9 +143,9 @@ const AddItemForm = styled.div`
 
 const FormHeading = styled.div`
   display: flex;
-  flex-direction: column;
+  font-size: 24px;
   padding-bottom: 5px;
-  padding-top: 5px;
+  padding-top: 15px;
 `;
 
 const FWrapper = styled.div`
