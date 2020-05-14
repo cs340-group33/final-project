@@ -2,7 +2,7 @@
 const { pool } = require('../config');
 const { returnErrorWithMessage, returnGeneralError} = require('./response-helpers');
 
-function makeDbQueryAndReturnResults(queryString, res) {
+async function makeDbQueryAndReturnResults(queryString, res) {
   pool.query(queryString, (error, results) => {
     if (error) {
       return returnErrorWithMessage(res, error);

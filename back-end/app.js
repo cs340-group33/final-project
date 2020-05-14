@@ -22,14 +22,14 @@ app.use(helmet());
 // uses CORS on URL if isProduction is true.
 const isProduction = process.env.NODE_ENV === 'production';
 const origin = {
-  origin: isProduction ? 'https://pn-pgtest.herokuapp.com' : '*',
+  origin: isProduction ? 'https://final-project.herokuapp.com' : '*',
 };
 app.use(cors(origin));
 
 // limits a client to 10 requests per minute.
 const limiter = rateLimit({
   windowMs: 1*60*1000,
-  max: 10,
+  max: 25,
 });
 app.use(limiter);
 

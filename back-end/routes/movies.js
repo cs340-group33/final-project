@@ -1,22 +1,75 @@
 require('dotenv').config();
-
-var express = require('express');
-var router = express.Router();
-
-var bodyParser = require('body-parser');
+const { pool } = require('../config');
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
 const {check, validationResult} = require('express-validator');
 
-const { makeDbQueryAndReturnResults, getRowFromDb } = require('../helpers/db-helpers')
-const { returnGeneralError, returnErrorWithMessage } = require('../helpers/response-helpers')
+const Movies = require('../queries/movie');
+
+/*
+
+function returnGeneralError(res) {
+  return res.status(500).send('An error occurred');
+}
+function returnErrorWithMessage(res, error) {
+  return res.status(500).send('An error occurred');
+}
+function returnNotFound(res, error = 'Not Found') {
+  return res.status(404).send(error);
+}
+
+async function getAllMovies(queryString, res) {
+  pool.query(queryString, (error, results) => {
+    if (error) {
+      return returnErrorWithMessage(res, error);
+    }
+    else if (!results || !results.rows || results.rows[0] === undefined) {
+      return returnGeneralError(res);
+    }
+    return res.status(200).send(results.rows);
+  })
+};
 
 
-
-/* GET movies */
+/!* GET movies *!/
 router.get('*', async function(req, res, next) {
-  // verify user has permission to get this data
-  const getUserQuery = 'SELECT movie_ID, title, created_at FROM movie' ;
-  makeDbQueryAndReturnResults(getUserQuery, res);
+  const getUserQuery = 'SELECT movie_ID, title FROM movie' ;
+  getAllMovies(getUserQuery, res);
+});
+*/
+
+
+router.get('/', async (req, res) => {
+  try {
+    let response = await Movies.findAll();
+
+    res.status(200).json(response);
+  } catch (e) {
+    res.sendStatus(500);
+  }
 });
 
+router.post('/', async (req, res) => {
+  console.log(req.body);
+  try {
+    await Movies.addOne(req.body);
+
+    res.sendStatus(200);
+  } catch (e) {
+    res.sendStatus(500);
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    await Movies.deleteOne(req.params.id);
+
+    res.sendStatus(200);
+  } catch (e) {
+
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;
