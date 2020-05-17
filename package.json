@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/cs340-group33/final-project#readme",
   "dependencies": {
-    "babel": "^6.23.0",
     "react": "^16.13.1"
   }
 }
