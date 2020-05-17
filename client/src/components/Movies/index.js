@@ -23,8 +23,8 @@ class Movies extends React.Component {
     this.setState({age: event.target.value});
   }
 
-  /*componentDidMount() {
-    axios.get('http://localhost:3000/movies/').then(
+  componentDidMount() {
+    axios.get('http://localhost:3000/movie/').then(
       (result) =>{
         console.log(result);
         this.setState({
@@ -38,7 +38,7 @@ class Movies extends React.Component {
         });
       }
     )
-  }*/
+  }
 
   render() {
     return (
