@@ -2,14 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
 import axios from 'axios';
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button,
+  ButtonGroup,
+   } from '@material-ui/core';
+
+const TableComponent = ({tableData}) => <table><tbody>
+{tableData.map(d=> <tr key={d.movie_id}>
+  <td>{d.movie_id}</td>
+  <td>{d.title}</td>
+</tr>)}
+</tbody></table>
 
 class Movies extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      data: []
+      movies: null,
+      isLoading: false,
     };
   }
 
@@ -23,24 +32,34 @@ class Movies extends React.Component {
     this.setState({age: event.target.value});
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:3000/movie/').then(
-      (result) =>{
-        console.log(result);
-        this.setState({
-          data: result.data
-        });
-      },
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error
-        });
+  getAndSaveData(){
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://final-project.herokuapp.com';
+    this.setState( async () => {
+      try {
+        const res = await axios.get(`${url}/movies`);
+        if (res.status === 200) {
+          let newData = res.data;
+          this.setState({
+            isLoading: false,
+            movies: newData
+          })
+
+        }
+      } catch (e) {
+        const {response: {status}} = e
       }
-    )
+    })
+  }
+
+
+  componentDidMount() {
+    this.setState({ isLoading: true});
+    this.getAndSaveData();
+    console.log(this.state.movies);
   }
 
   render() {
+
     return (
       <PageContainer>
         <SideBarNav>
@@ -64,8 +83,8 @@ class Movies extends React.Component {
                <table>
                   <thead>
                     <tr>
+                      <th>Movie ID</th>
                       <th>Movie Title</th>
-                      <th>Is Playing</th>
                       <th>Manage Movie</th>
                     </tr>
                   </thead>
@@ -80,6 +99,7 @@ class Movies extends React.Component {
                      </ButtonGroup>
                    </td>
                  </tr>
+                 {/*{movieRows}*/}
                  </tbody>
                 </table>
               </TheaterTable>
@@ -87,7 +107,7 @@ class Movies extends React.Component {
                 <FormHeading>Search for a Movie</FormHeading>
                 <FWrapper>
                   <FHeading htmlFor="movie_title">Movie Title:</FHeading>
-                  <FInput id="movie_title" name="movie_title" type="text" />
+                  <FInput id="search_movie_title" name="movie_title" type="text" />
                 </FWrapper>
                 <Button variant="contained" color="primary" size="small">
                   Search
@@ -97,7 +117,7 @@ class Movies extends React.Component {
                 <FormHeading>Add A New Movie...</FormHeading>
                 <FWrapper>
                   <FHeading htmlFor="movie_title">Movie Title:</FHeading>
-                  <FInput id="movie_title" name="movie_title" type="text" />
+                  <FInput id="add_movie_title" name="movie_title" type="text" />
                 </FWrapper>
                 <Button variant="contained" color="primary" size="small">
                   Add Movie

@@ -7,7 +7,7 @@ async function findAll() {
     let movies = await pool.query( query );
     return movies;
   } catch (e) {
-    throw new Error(e);
+    throw (e);
   }
 }
 

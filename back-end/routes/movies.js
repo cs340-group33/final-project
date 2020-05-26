@@ -7,38 +7,6 @@ const {check, validationResult} = require('express-validator');
 
 const Movies = require('../queries/movie');
 
-/*
-
-function returnGeneralError(res) {
-  return res.status(500).send('An error occurred');
-}
-function returnErrorWithMessage(res, error) {
-  return res.status(500).send('An error occurred');
-}
-function returnNotFound(res, error = 'Not Found') {
-  return res.status(404).send(error);
-}
-
-async function getAllMovies(queryString, res) {
-  pool.query(queryString, (error, results) => {
-    if (error) {
-      return returnErrorWithMessage(res, error);
-    }
-    else if (!results || !results.rows || results.rows[0] === undefined) {
-      return returnGeneralError(res);
-    }
-    return res.status(200).send(results.rows);
-  })
-};
-
-
-/!* GET movies *!/
-router.get('*', async function(req, res, next) {
-  const getUserQuery = 'SELECT movie_ID, title FROM movie' ;
-  getAllMovies(getUserQuery, res);
-});
-*/
-
 
 router.get('/', async (req, res) => {
   try {
