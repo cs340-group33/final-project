@@ -18,7 +18,7 @@ class Movies extends React.Component {
     super(props);
     this.state = {
       movies: null,
-      isLoading: false,
+      isLoading: true,
     };
   }
 
@@ -51,11 +51,27 @@ class Movies extends React.Component {
     })
   }
 
+  renderMovies () {
+    if(!this.state.isLoading){
+      return this.state.movies.map((movies) => {
+        const { movie_id, title } = movies
+        return (
+          <tr key={movie_id}>
+            <td>{movie_id}</td>
+            <td>{title}</td>
+            <td><ButtonGroup color="primary" aria-label="small outlined primary button group">
+              <Button>Edit Title</Button>
+              <Button>Delete</Button>
+            </ButtonGroup></td>
+          </tr>
+        )
+      })
+    }
+  }
+
 
   componentDidMount() {
-    this.setState({ isLoading: true});
     this.getAndSaveData();
-    console.log(this.state.movies);
   }
 
   render() {
@@ -89,17 +105,7 @@ class Movies extends React.Component {
                     </tr>
                   </thead>
                  <tbody>
-                 <tr>
-                   <td>Test Data</td>
-                   <td>Test Data</td>
-                   <td>
-                     <ButtonGroup color="primary" aria-label="small outlined primary button group">
-                       <Button>Edit Title</Button>
-                       <Button>Delete</Button>
-                     </ButtonGroup>
-                   </td>
-                 </tr>
-                 {/*{movieRows}*/}
+                 {this.renderMovies()}
                  </tbody>
                 </table>
               </TheaterTable>
