@@ -24,7 +24,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const origin = {
   origin: isProduction ? 'https://final-project.herokuapp.com' : '*',
 };
-app.use(cors(origin));
+app.use(cors);
 
 // limits a client to 10 requests per minute.
 const limiter = rateLimit({
