@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 
     res.status(200).json(response.rows);
   } catch (e) {
-    res.sendStatus(500);
+    res.status(500);
   }
 });
 
@@ -26,7 +26,7 @@ router.get('/notshowing', async (req, res) => {
 
     res.status(200).json(response.rows);
   } catch (e) {
-    res.sendStatus(500);
+    res.status(500);
   }
 });
 
@@ -36,9 +36,9 @@ router.post('/', async (req, res) => {
   try {
     await Movies.addOne(req.body);
 
-    res.sendStatus(200);
+    res.status(200);
   } catch (e) {
-    res.sendStatus(500);
+    res.status(500);
   }
 });
 
@@ -46,11 +46,11 @@ router.post('/', async (req, res) => {
 router.post('/search', async (req, res) => {
   console.log(req.body);
   try {
-    await Movies.search(req.body);
+    let response = await Movies.search(req.body);
 
-    res.sendStatus(200);
+    res.status(200).json(response.rows);
   } catch (e) {
-    res.sendStatus(500);
+    res.status(500);
   }
 });
 
@@ -58,10 +58,10 @@ router.delete('/:id', async (req, res) => {
   try {
     await Movies.deleteOne(req.params.id);
 
-    res.sendStatus(200);
+    res.status(200);
   } catch (e) {
 
-    res.sendStatus(500);
+    res.status(500);
   }
 });
 

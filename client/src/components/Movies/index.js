@@ -6,17 +6,14 @@ import { Button,
   ButtonGroup,
    } from '@material-ui/core';
 
-const TableComponent = ({tableData}) => <table><tbody>
-{tableData.map(d=> <tr key={d.movie_id}>
-  <td>{d.movie_id}</td>
-  <td>{d.title}</td>
-</tr>)}
-</tbody></table>
+
 
 class Movies extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: '',
+      setTitle:'',
       movies: null,
       isLoading: true,
     };
@@ -27,9 +24,16 @@ class Movies extends React.Component {
     const newMovie = new FormData(event.target);
   }
 
-  handleChange(event){
+  handleChange = (field, event) => {
+    this.setState({
+      [field]: event.target.value
+    })
+  }
+
+  handleSearch(event){
     event.preventDefault();
-    this.setState({age: event.target.value});
+
+
   }
 
   getAndSaveData(){
@@ -40,6 +44,7 @@ class Movies extends React.Component {
         if (res.status === 200) {
           let newData = res.data;
           this.setState({
+            searchItem: '',
             isLoading: false,
             movies: newData
           })
@@ -109,26 +114,26 @@ class Movies extends React.Component {
                  </tbody>
                 </table>
               </TheaterTable>
-              <SearchMovie onSubmit={this.handleSubmit}>
+              <SearchMovie onSubmit={this.handleSearch}>
                 <FormHeading>Search for a Movie</FormHeading>
                 <FWrapper>
-                  <FHeading htmlFor="movie_title">Movie Title:</FHeading>
-                  <FInput id="search_movie_title" name="movie_title" type="text" />
+                  <FHeading>Movie Title:</FHeading>
+                  <FInput type="text" placeholder="search"  value = {this.state.title} onChange = {e=> this.setState({title: e.target.value})}/>
                 </FWrapper>
-                <Button variant="contained" color="primary" size="small">
+                <Button variant="contained" color="primary" size="small" type="submit">
                   Search
                 </Button>
               </SearchMovie>
-              <AddItemForm onSubmit={this.handleSubmit}>
+              {/*<AddItemForm onSubmit={this.handleSubmit}>
                 <FormHeading>Add A New Movie...</FormHeading>
                 <FWrapper>
                   <FHeading htmlFor="movie_title">Movie Title:</FHeading>
-                  <FInput id="add_movie_title" name="movie_title" type="text" />
+                  <FInput id="add_movie_title" name="movie_title" type="text"/>
                 </FWrapper>
                 <Button variant="contained" color="primary" size="small">
                   Add Movie
                 </Button>
-              </AddItemForm>
+              </AddItemForm>*/}
             </RCBContent>
           </RightContentBox>
         </RightBox>
@@ -204,7 +209,7 @@ const AddItemForm = styled.div`
   padding: 5px 5px 5px 5px;
 `;
 
-const SearchMovie = styled.div`
+const SearchMovie = styled.form`
   display: flex;
   flex-direction: column;
   font-weight: 600;

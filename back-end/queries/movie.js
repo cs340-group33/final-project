@@ -36,12 +36,12 @@ async function addOne(movieInfo) {
 }
 
 async function search(movieInfo) {
-  const query = 'SELECT movie_id, title FROM movie ' +
-                'WHERE title LIKE %' + search + '%';
+  const query = 'SELECT movie_id, title FROM movie WHERE title LIKE ($1)';
   const { title } = movieInfo;
+  const searchLike = '%'+title+'%';
   console.log(search);
   try {
-    let movies = await pool.query( query, [title] );
+    let movies = await pool.query( query, [searchLike] );
     return movies;
   } catch (e) {
     throw new Error(e);
