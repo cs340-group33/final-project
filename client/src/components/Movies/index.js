@@ -37,7 +37,7 @@ class Movies extends React.Component {
   }
 
   getAndSaveData(){
-    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com/';
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
     this.setState( async () => {
       try {
         const res = await axios.get(`${url}/movies`);
@@ -51,6 +51,7 @@ class Movies extends React.Component {
 
         }
       } catch (e) {
+        console.log(e);
         const {response: {status}} = e
       }
     })
