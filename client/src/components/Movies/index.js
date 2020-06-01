@@ -12,7 +12,7 @@ class Movies extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
+      searchTitle: '',
       newMovieTitle: '',
       setTitle:'',
       movies: null,
@@ -20,9 +20,36 @@ class Movies extends React.Component {
     };
   }
 
-
-  handleSearch(event){
+  handleSubmitSearch = async (event) =>{
     event.preventDefault();
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
+
+    const config = {
+      'Content-Type': 'application/json',
+    };
+    const payload = {
+      'title': this.state.searchTitle
+    };
+    this.setState( async ()=> {
+      try {
+        const res = await axios.post(`${url}/movies/search`, payload, config);
+        if (res.status === 200) {
+          let newData = res.data;
+          this.setState({
+            movies: newData
+          })
+        }
+      } catch (e) {
+        console.log(e);
+        const {response: {status}} = e
+      }
+    });
+    this.renderMovies();
+  }
+
+
+  handleChangeSearch= (event) => {
+    this.setState({searchTitle: event.target.value});
   }
 
 
@@ -61,7 +88,6 @@ class Movies extends React.Component {
         if (res.status === 200) {
           let newData = res.data;
           this.setState({
-            searchItem: '',
             isLoading: false,
             movies: newData
           })
@@ -132,11 +158,11 @@ class Movies extends React.Component {
                  </tbody>
                 </table>
               </TheaterTable>
-              <SearchMovie onSubmit={this.handleSearch}>
+              <SearchMovie onSubmit={this.handleSubmitSearch}>
                 <FormHeading>Search for a Movie</FormHeading>
                 <FWrapper>
                   <FHeading>Movie Title:</FHeading>
-                  <FInput type="text" placeholder="Search"  value = {this.state.title} onChange = {e=> this.setState({title: e.target.value})}/>
+                  <FInput type="text" placeholder="Search"  value = {this.state.searchTitle} onChange = {this.handleChangeSearch}/>
                 </FWrapper>
                 <Button variant="contained" color="primary" size="small" type="submit">
                   Search
