@@ -13,27 +13,44 @@ class Movies extends React.Component {
     super(props);
     this.state = {
       title: '',
+      newMovieTitle: '',
       setTitle:'',
       movies: null,
       isLoading: true,
     };
   }
 
-  handleSubmit(event){
-    event.preventDefault();
-    const newMovie = new FormData(event.target);
-  }
-
-  handleChange = (field, event) => {
-    this.setState({
-      [field]: event.target.value
-    })
-  }
 
   handleSearch(event){
     event.preventDefault();
+  }
 
 
+  handleSubmitAdd = async (event) =>{
+    event.preventDefault();
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
+
+    const config = {
+      'Content-Type': 'application/json',
+    };
+    const payload = {
+      'title': this.state.newMovieTitle
+    };
+    this.setState( async ()=> {
+      try {
+        const res = await axios.post(`${url}/movies`, payload, config);
+        if (res.status === 200) {
+        }
+      } catch (e) {
+        console.log(e);
+        const {response: {status}} = e
+      }
+    });
+    this.getAndSaveData();
+    this.renderMovies();
+  }
+  handleChangeMovie = (event) => {
+    this.setState({newMovieTitle: event.target.value});
   }
 
   getAndSaveData(){
@@ -119,22 +136,22 @@ class Movies extends React.Component {
                 <FormHeading>Search for a Movie</FormHeading>
                 <FWrapper>
                   <FHeading>Movie Title:</FHeading>
-                  <FInput type="text" placeholder="search"  value = {this.state.title} onChange = {e=> this.setState({title: e.target.value})}/>
+                  <FInput type="text" placeholder="Search"  value = {this.state.title} onChange = {e=> this.setState({title: e.target.value})}/>
                 </FWrapper>
                 <Button variant="contained" color="primary" size="small" type="submit">
                   Search
                 </Button>
               </SearchMovie>
-              {/*<AddItemForm onSubmit={this.handleSubmit}>
+              <AddItemForm onSubmit={this.handleSubmitAdd}>
                 <FormHeading>Add A New Movie...</FormHeading>
                 <FWrapper>
-                  <FHeading htmlFor="movie_title">Movie Title:</FHeading>
-                  <FInput id="add_movie_title" name="movie_title" type="text"/>
+                  <FHeading>Movie Title:</FHeading>
+                  <FInput type="text" placeholder="Add New Movie" value={this.state.newMovieTitle} onChange={this.handleChangeMovie}/>
                 </FWrapper>
-                <Button variant="contained" color="primary" size="small">
+                <Button variant="contained" color="primary" size="small" type="submit">
                   Add Movie
                 </Button>
-              </AddItemForm>*/}
+              </AddItemForm>
             </RCBContent>
           </RightContentBox>
         </RightBox>
@@ -203,7 +220,7 @@ const RCBContent = styled.div`
 `;
 
 
-const AddItemForm = styled.div`
+const AddItemForm = styled.form`
   display: flex;
   flex-direction: column;
   font-weight: 600;
