@@ -9,11 +9,13 @@ import { Button,
 
 
 class Movies extends React.Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
       searchTitle: '',
       newMovieTitle: '',
+      toDelete: '',
       setTitle:'',
       movies: null,
       isLoading: true,
@@ -41,13 +43,10 @@ class Movies extends React.Component {
         }
       } catch (e) {
         console.log(e);
-        const {response: {status}} = e
       }
     });
     this.renderMovies();
   }
-
-
   handleChangeSearch= (event) => {
     this.setState({searchTitle: event.target.value});
   }
@@ -70,7 +69,6 @@ class Movies extends React.Component {
         }
       } catch (e) {
         console.log(e);
-        const {response: {status}} = e
       }
     });
     this.getAndSaveData();
@@ -78,6 +76,49 @@ class Movies extends React.Component {
   }
   handleChangeMovie = (event) => {
     this.setState({newMovieTitle: event.target.value});
+  }
+
+  handleDelete = (movie_id) => async () =>{
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
+
+    this.setState( async ()=> {
+      try {
+        const res = await axios.delete(`${url}/movies/${movie_id}`);
+        if (res.status === 200) {
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    });
+    this.getAndSaveData();
+    this.renderMovies();
+  }
+
+  handleShowAll = (event) => {
+    event.preventDefault();
+    this.getAndSaveData();
+    this.renderMovies();
+  }
+
+  handleDisplayNotShowing = (event) => {
+    event.preventDefault();
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
+    this.setState( async () => {
+      try {
+        const res = await axios.get(`${url}/movies/notshowing`);
+        if (res.status === 200) {
+          let newData = res.data;
+          this.setState({
+            isLoading: false,
+            movies: newData
+          })
+
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })
+    this.renderMovies();
   }
 
   getAndSaveData(){
@@ -95,7 +136,6 @@ class Movies extends React.Component {
         }
       } catch (e) {
         console.log(e);
-        const {response: {status}} = e
       }
     })
   }
@@ -109,8 +149,8 @@ class Movies extends React.Component {
             <td>{movie_id}</td>
             <td>{title}</td>
             <td><ButtonGroup color="primary" aria-label="small outlined primary button group">
-              <Button>Edit Title</Button>
-              <Button>Delete</Button>
+              {/*<Button>Edit Title</Button>*/}
+              <Button onClick={this.handleDelete(movie_id)}>Delete</Button>
             </ButtonGroup></td>
           </tr>
         )
@@ -120,7 +160,11 @@ class Movies extends React.Component {
 
 
   componentDidMount() {
+    this._isMounted = true;
     this.getAndSaveData();
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
@@ -136,11 +180,11 @@ class Movies extends React.Component {
             </RCBHeader>
             <RCBContent>
               <TableInfo>
-                <Button variant="contained" color="primary" size="medium">
+                <Button variant="contained" color="primary" size="medium" onClick={this.handleDisplayNotShowing}>
                   Display Movies That Aren't Currently Shown
                 </Button>
                 <br/>
-                <Button variant="contained" color="primary" size="medium">
+                <Button variant="contained" color="primary" size="medium" onClick={this.handleShowAll}>
                   Display All Movies
                 </Button>
               </TableInfo>
@@ -168,6 +212,7 @@ class Movies extends React.Component {
                   Search
                 </Button>
               </SearchMovie>
+              <div>Note: Duplicate Movies Will Not Be Added...</div>
               <AddItemForm onSubmit={this.handleSubmitAdd}>
                 <FormHeading>Add A New Movie...</FormHeading>
                 <FWrapper>
