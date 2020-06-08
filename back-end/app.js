@@ -6,6 +6,9 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const movieRouter = require('./routes/movies');
+const showingRouter = require('./routes/showing');
+const screenRouter = require('./routes/screen');
+const theaterRouter = require('./routes/theaters');
 
 
 const helmet = require('helmet');
@@ -26,7 +29,7 @@ const origin = {
 };
 app.use(cors(origin));
 
-// limits a client to 10 requests per minute.
+// limits a client to 25 requests per minute.
 const limiter = rateLimit({
   windowMs: 1*60*1000,
   max: 25,
@@ -44,7 +47,10 @@ app.use(express.static(path.join(__dirname, '../dist')))
 
 app.use(cookieParser());
 
+app.use('/theaters', theaterRouter);
 app.use('/movies', movieRouter);
+app.use('/showings', showingRouter);
+app.use('/screens', screenRouter);
 app.use('*', indexRouter);
 
 module.exports = app;

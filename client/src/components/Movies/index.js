@@ -181,7 +181,7 @@ class Movies extends React.Component {
             <RCBContent>
               <TableInfo>
                 <Button variant="contained" color="primary" size="medium" onClick={this.handleDisplayNotShowing}>
-                  Display Movies That Aren't Currently Shown
+                  Display Movies That Don't Have A Showing
                 </Button>
                 <br/>
                 <Button variant="contained" color="primary" size="medium" onClick={this.handleShowAll}>
@@ -202,6 +202,7 @@ class Movies extends React.Component {
                  </tbody>
                 </table>
               </TheaterTable>
+              <div>Note: Search is Case Sensitive</div>
               <SearchMovie onSubmit={this.handleSubmitSearch}>
                 <FormHeading>Search for a Movie</FormHeading>
                 <FWrapper>

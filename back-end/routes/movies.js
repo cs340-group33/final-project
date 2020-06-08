@@ -1,9 +1,8 @@
 require('dotenv').config();
-const { pool } = require('../config');
+
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser');
-const {check, validationResult} = require('express-validator');
+
 
 const Movies = require('../queries/movie');
 

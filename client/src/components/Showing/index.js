@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
-import { Button, ButtonGroup } from '@material-ui/core';
-
+import axios from 'axios';
+import { Button } from '@material-ui/core';
 
 class Showing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
+      data: null
     };
   }
 
@@ -16,9 +18,55 @@ class Showing extends React.Component {
     const newScreen = new FormData(event.target);
   }
 
-  handleChange(event){
-    event.preventDefault();
-    this.setState({age: event.target.value});
+  getAndSaveData(){
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
+    this.setState( async () => {
+      try {
+        const res = await axios.get(`${url}/showings`);
+        if (res.status === 200) {
+          let newData = res.data;
+          this.setState({
+            isLoading: false,
+            data: newData
+          })
+          console.log(newData);
+
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })
+  }
+
+  componentDidMount() {
+    this.getAndSaveData();
+  }
+
+  renderShowings(){
+    if(!this.state.isLoading){
+      return this.state.data.map((data) => {
+        const { theater_name, screen_id, showing_id, start_time, title} = data
+        return (
+          <tr key={showing_id}>
+            <td>{theater_name}</td>
+            <td>{screen_id}</td>
+            <td>{showing_id}</td>
+            <td>{start_time}</td>
+            <td>{title}</td>
+            <td>
+              <Button variant="contained" color="default" size="small">
+                Select Showing
+              </Button>
+            </td>
+            <td>
+              <Button variant="contained" color="secondary" size="small">
+                Delete
+              </Button>
+            </td>
+          </tr>
+        )
+      })
+    }
   }
 
   render() {
@@ -38,6 +86,7 @@ class Showing extends React.Component {
                   <tr>
                     <th>Theater Name</th>
                     <th>Screen Number</th>
+                    <th>Showing ID</th>
                     <th>Showing Time</th>
                     <th>Movie Showing</th>
                     <th>Select Movie</th>
@@ -45,22 +94,7 @@ class Showing extends React.Component {
                   </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Test Data</td>
-                      <td>Test Data</td>
-                      <td>Test Data</td>
-                      <td>Test Data</td>
-                      <td>
-                        <Button variant="contained" color="default" size="small">
-                          Select
-                        </Button>
-                      </td>
-                      <td>
-                        <Button variant="contained" color="secondary" size="small">
-                          Delete Showing
-                        </Button>
-                      </td>
-                    </tr>
+                  {this.renderShowings()}
                   </tbody>
                 </table>
               </TheaterTable>

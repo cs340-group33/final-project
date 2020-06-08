@@ -1,13 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
-import { Button, ButtonGroup } from '@material-ui/core';
+import axios from 'axios';
+import { Button } from '@material-ui/core';
 
 
 class Screens extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
+      data: null
     };
   }
 
@@ -16,9 +19,52 @@ class Screens extends React.Component {
     const newScreen = new FormData(event.target);
   }
 
-  handleChange(event){
-    event.preventDefault();
-    this.setState({age: event.target.value});
+  getAndSaveData(){
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
+    this.setState( async () => {
+      try {
+        const res = await axios.get(`${url}/screens`);
+        if (res.status === 200) {
+          let newData = res.data;
+          this.setState({
+            isLoading: false,
+            data: newData
+          })
+          console.log(newData);
+
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })
+  }
+  componentDidMount() {
+    this.getAndSaveData();
+  }
+
+  renderScreens(){
+    if(!this.state.isLoading){
+      return this.state.data.map((data) => {
+        const { theater_name, screen_id, seats} = data
+        return (
+          <tr key={screen_id}>
+            <td>{theater_name}</td>
+            <td>{screen_id}</td>
+            <td>{seats}</td>
+            <td>
+              <Button variant="contained" color="default" size="small">
+                Select Screen
+              </Button>
+            </td>
+            <td>
+              <Button variant="contained" color="secondary" size="small">
+                Delete
+              </Button>
+            </td>
+          </tr>
+        )
+      })
+    }
   }
 
   render() {
@@ -39,28 +85,12 @@ class Screens extends React.Component {
                     <th>Theater Name</th>
                     <th>Screen Number</th>
                     <th>Seats</th>
-                    <th>Open Showings</th>
                     <th>Select Showings</th>
                     <th>Delete</th>
                   </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Test Data</td>
-                      <td>Test Data</td>
-                      <td>Test Data</td>
-                      <td>Test Data</td>
-                      <td>
-                        <Button variant="contained" color="default" size="small">
-                          Add/Select Showing
-                        </Button>
-                      </td>
-                      <td>
-                        <Button variant="contained" color="secondary" size="small">
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
+                  {this.renderScreens()}
                   </tbody>
                 </table>
               </TheaterTable>

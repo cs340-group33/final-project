@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
-import { Button, ButtonGroup } from '@material-ui/core';
+import axios from 'axios';
+import { Button } from '@material-ui/core';
 
 class Theaters extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      age:''
+      isLoading: true,
+      data: []
     };
   }
 
@@ -18,6 +20,76 @@ class Theaters extends React.Component {
   handleChange(event){
     event.preventDefault();
     this.setState({age: event.target.value});
+  }
+
+
+  getAndSaveData(){
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
+    this.setState( async () => {
+      try {
+        const res = await axios.get(`${url}/theaters`);
+        if (res.status === 200) {
+          let newData = res.data;
+          this.setState({
+            isLoading: false,
+            data: newData
+          })
+
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })
+  }
+
+  componentDidMount() {
+    this.getAndSaveData();
+  }
+
+  handleDelete = (theater_id) => async () =>{
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
+
+    this.setState( async ()=> {
+      try {
+        const res = await axios.delete(`${url}/theaters/${theater_id}`);
+        if (res.status === 200) {
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    });
+    this.getAndSaveData();
+    this.renderTheaters();
+  }
+
+  handleSelect = (theater_id) => async () =>{
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
+
+  }
+
+  renderTheaters () {
+    if(!this.state.isLoading){
+      return this.state.data.map((theaters) => {
+        const { theater_id, theater_name, street, city, zip } = theaters
+        return (
+          <tr key={theater_id}>
+            <td>{theater_name}</td>
+            <td>{street}</td>
+            <td>{city}</td>
+            <td>{zip}</td>
+            <td>
+              <Button variant="contained" color="default" size="small" onClick={this.handleSelect(theater_id)}>
+                Select
+              </Button>
+            </td>
+            <td><Button variant="contained" color="secondary" size="small" onClick={this.handleDelete(theater_id)}>
+              Delete
+            </Button>
+              </td>
+          </tr>
+        )
+      })
+    }
   }
 
   render() {
@@ -47,22 +119,7 @@ class Theaters extends React.Component {
                   </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Test Data</td>
-                      <td>Test Data</td>
-                      <td>Test Data</td>
-                      <td>Test Data</td>
-                      <td>
-                        <Button variant="contained" color="default" size="small">
-                          Select
-                        </Button>
-                        </td>
-                      <td>
-                        <Button variant="contained" color="secondary" size="small">
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
+                  {this.renderTheaters()}
                   </tbody>
                 </table>
               </TheaterTable>
