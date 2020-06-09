@@ -9,6 +9,8 @@ const movieRouter = require('./routes/movies');
 const showingRouter = require('./routes/showing');
 const screenRouter = require('./routes/screen');
 const theaterRouter = require('./routes/theaters');
+const managerRouter = require('./routes/managers');
+const TMSRouter = require('./routes/tms');
 
 
 const helmet = require('helmet');
@@ -29,10 +31,10 @@ const origin = {
 };
 app.use(cors(origin));
 
-// limits a client to 25 requests per minute.
+// limits a client to 50 requests per minute.
 const limiter = rateLimit({
   windowMs: 1*60*1000,
-  max: 25,
+  max: 50,
 });
 app.use(limiter);
 
@@ -48,6 +50,8 @@ app.use(express.static(path.join(__dirname, '../dist')))
 app.use(cookieParser());
 
 app.use('/theaters', theaterRouter);
+app.use('/tms', TMSRouter);
+app.use('/managers', managerRouter);
 app.use('/movies', movieRouter);
 app.use('/showings', showingRouter);
 app.use('/screens', screenRouter);

@@ -23,7 +23,7 @@ async function findNotShowing(){
   }
 }
 
-//TODO Parse this so it is only title before it gets passed to addO()
+
 async function addOne(movieInfo) {
   const query = 'INSERT INTO movie (title) VALUES ($1) ON CONFLICT DO NOTHING';
   const { title } = movieInfo;

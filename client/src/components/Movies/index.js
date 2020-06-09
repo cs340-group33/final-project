@@ -46,6 +46,7 @@ class Movies extends React.Component {
       }
     });
     this.renderMovies();
+    this.setState({searchTitle: ''});
   }
   handleChangeSearch= (event) => {
     this.setState({searchTitle: event.target.value});
@@ -73,6 +74,7 @@ class Movies extends React.Component {
     });
     this.getAndSaveData();
     this.renderMovies();
+    this.setState({newMovieTitle: ''});
   }
   handleChangeMovie = (event) => {
     this.setState({newMovieTitle: event.target.value});
@@ -149,7 +151,7 @@ class Movies extends React.Component {
             <td>{movie_id}</td>
             <td>{title}</td>
             <td><ButtonGroup color="primary" aria-label="small outlined primary button group">
-              {/*<Button>Edit Title</Button>*/}
+              <Button>Edit Title</Button>
               <Button onClick={this.handleDelete(movie_id)}>Delete</Button>
             </ButtonGroup></td>
           </tr>

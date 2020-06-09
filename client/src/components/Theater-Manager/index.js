@@ -5,14 +5,13 @@ import SideBarNav from "../../Shared/SideNavBar";
 import { Button } from '@material-ui/core';
 
 
-class Managers extends React.Component {
+class TMs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      first_name: '',
-      last_name: '',
       isLoading: true,
-      data: []
+      data: [],
+      managers: []
     };
   }
   handleSubmit(event){
@@ -25,62 +24,35 @@ class Managers extends React.Component {
     })
   }
 
-  handleSubmitAdd = async (event) =>{
-    event.preventDefault();
 
-    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
-    console.log("duplicate");
-    const config = {
-      'Content-Type': 'application/json',
-    };
-    const payload = {
-      'first_name': this.state.first_name,
-      'last_name': this.state.last_name
-    };
-    this.setState(async () => {
-      try {
-        const res = await axios.post(`${url}/managers`, payload, config);
-        if (res.status === 200) {
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    });
-    this.getAndSaveData();
-    this.renderManagers();
 
-    this.setState(
-      {first_name: '',
-        last_name: ''});
-  }
-
-  handleDelete = (manager_ID) => async () =>{
-    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
-
-    this.setState( async ()=> {
-      try {
-        const res = await axios.delete(`${url}/managers/${manager_ID}`);
-        if (res.status === 200) {
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    });
-    this.getAndSaveData();
-    this.renderManagers();
-  }
-
-  renderManagers () {
+  renderTMs () {
     if(!this.state.isLoading){
-      return this.state.data.map((managers) => {
-        const { manager_id, first_name, last_name } = managers
+      return this.state.data.map((tms, i) => {
+        const { theater_name, first_name, last_name } = tms
+        if(first_name === null){
+          return (
+            <tr key={i}>
+              <td><Button variant="contained" color="default" size="small" >
+                Select
+              </Button></td>
+              <td>{theater_name}</td>
+              <td>NULL</td>
+              <td>
+                <Button variant="contained" color="secondary" size="small" >Delete</Button>
+              </td>
+            </tr>
+          )
+        }
         return (
-          <tr key={manager_id}>
-            <td>{manager_id}</td>
-            <td>{first_name}</td>
-            <td>{last_name}</td>
+          <tr key={i}>
+            <td><Button variant="contained" color="default" size="small" >
+              Select
+            </Button></td>
+            <td>{theater_name}</td>
+            <td>{first_name} {last_name}</td>
             <td>
-              <Button variant="contained" color="secondary" size="small" onClick={this.handleDelete(manager_id)}>Delete</Button>
+              <Button variant="contained" color="secondary" size="small" >Delete</Button>
             </td>
           </tr>
         )
@@ -92,7 +64,7 @@ class Managers extends React.Component {
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
     this.setState( async () => {
       try {
-        const res = await axios.get(`${url}/managers`);
+        const res = await axios.get(`${url}/tms`);
         if (res.status === 200) {
           let newData = res.data;
           this.setState({
@@ -111,7 +83,6 @@ class Managers extends React.Component {
   }
 
   render() {
-
     return (
       <PageContainer>
         <SideBarNav>
@@ -119,33 +90,26 @@ class Managers extends React.Component {
         <RightBox>
           <RightContentBox>
             <RCBHeader>
-              <div>Managers</div>
+              <div>Theaters-Managers</div>
             </RCBHeader>
+            <div>Select which manager is assigned to which theater</div><br></br>
             <RCBContent>
               <TheaterTable>
                 <table>
                   <thead>
-                    <tr>
-                      <th>Manager ID</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Delete</th>
-                    </tr>
+                  <tr>
+                    <th>Select Theater</th>
+                    <th>Theater Name</th>
+                    <th>Manager Namn</th>
+                    <th>Delete</th>
+                  </tr>
                   </thead>
                   <tbody>
-                  {this.renderManagers()}
+                  {this.renderTMs()}
                   </tbody>
                 </table>
                 <AddItemForm onSubmit={this.handleSubmitAdd}>
-                  <FormHeading>Add New Manager...</FormHeading>
-                  <FWrapper>
-                    <FHeading htmlFor="first_name">First Name:</FHeading>
-                    <FInput required name="first_name" type="text" value = {this.state.first_name} onChange={(event) => this.handleChange("first_name", event)}/>
-                  </FWrapper>
-                  <FWrapper>
-                    <FHeading htmlFor="last_name">Last Name:</FHeading>
-                    <FInput required name="last_name" type="text" value = {this.state.last_name} onChange={(event) => this.handleChange("last_name", event)}/>
-                  </FWrapper>
+                  <FormHeading>Select Theater And Click To Add Manager...</FormHeading>
                   <Button variant="contained" color="primary" size="small" type="submit">
                     Add Manager
                   </Button>
@@ -250,4 +214,4 @@ const FInput = styled.input`
 `;
 
 
-export default Managers;
+export default TMs;

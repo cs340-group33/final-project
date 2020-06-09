@@ -9,18 +9,62 @@ class Theaters extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
+      isError: false,
+      newName: '',
+      newStreet: '',
+      newCity: '',
+      newZip: '',
       data: []
     };
   }
 
-  handleSubmit(event){
+  handleSubmitAdd = async (event) =>{
     event.preventDefault();
-    const newTheater = new FormData(event.target);
+
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
+
+    
+      this.setState({isError: false});
+      const config = {
+        'Content-Type': 'application/json',
+      };
+      const payload = {
+        'theater_name': this.state.newName,
+        'street': this.state.newStreet,
+        'city': this.state.newCity,
+        'zip': this.state.newZip
+      };
+      this.setState(async () => {
+        try {
+          const res = await axios.post(`${url}/theaters`, payload, config);
+          if (res.status === 200) {
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      });
+      this.getAndSaveData();
+      this.renderTheaters();
+
+    this.setState(
+      {newName: '',
+      newStreet: '',
+      newCity: '',
+      newZip: '',});
   }
-  handleChange(event){
-    event.preventDefault();
-    this.setState({age: event.target.value});
+
+
+  handleChange = (field, event) => {
+    this.setState({
+      [field]: event.target.value
+    })
   }
+  handleChangeZip(event){
+    const newZip = (event.target.validity.valid) ? event.target.value : this.state.newZip;
+
+    this.setState({ newZip });
+  }
+
 
 
   getAndSaveData(){
@@ -123,25 +167,26 @@ class Theaters extends React.Component {
                   </tbody>
                 </table>
               </TheaterTable>
-              <AddItemForm onSubmit={this.handleSubmit}>
+              <div>Non-Unique Names Will Not Be Added...</div>
+              <AddItemForm onSubmit={this.handleSubmitAdd}>
                   <FormHeading>Add New Theater...</FormHeading>
                   <FWrapper>
-                  <FHeading htmlFor="name">Name:</FHeading>
-                  <FInput id="name" name="name" type="text" />
+                  <FHeading>Name:</FHeading>
+                  <FInput required name="name" type="text" value = {this.state.newName} onChange={(event) => this.handleChange("newName", event)} />
                   </FWrapper>
                   <FWrapper>
                   <FHeading htmlFor="street">Street:</FHeading>
-                  <FInput id="street" name="street" type="text" />
+                  <FInput required name="street" type="text" value = {this.state.newStreet} onChange={(event) => this.handleChange("newStreet", event)}/>
                   </FWrapper>
                   <FWrapper>
                   <FHeading htmlFor="city">City:</FHeading>
-                  <FInput id="city" name="city" type="text" />
+                  <FInput required name="city" type="text" value = {this.state.newCity} onChange={(event) => this.handleChange("newCity", event)}/>
                   </FWrapper>
                   <FWrapper>
                   <FHeading htmlFor="zip">ZIP:</FHeading>
-                  <FInput id="zip" name="zip" type="num" />
+                  <FInput required name="zip" type="text" pattern='[0-9]*' value = {this.state.newZip} onChange={this.handleChangeZip.bind(this)} />
                   </FWrapper>
-                  <Button variant="contained" color="primary" size="small">
+                  <Button variant="contained" color="primary" size="small" type="submit">
                     Add Theater
                   </Button>
               </AddItemForm>
@@ -174,6 +219,12 @@ const TheaterTable = styled.div`
    border: 1px solid black;
    padding: 5px;
   }
+`;
+
+const ErrorBox = styled.div`
+  align-items: center;
+  font-weight: bold;
+  color: red;
 `;
 
 const RightBox = styled.div`
@@ -214,7 +265,7 @@ const RCBContent = styled.div`
 `;
 
 
-const AddItemForm = styled.div`
+const AddItemForm = styled.form`
   display: flex;
   flex-direction: column;
   font-weight: 600;

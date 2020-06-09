@@ -18,6 +18,7 @@ class SideBarNav extends React.Component {
           <ul>
             <li><Link to="/dashboard">Home</Link></li>
             <li><Link to="/theaters">Theaters</Link></li>
+            <li><Link to="/tms">Theater-Manager</Link></li>
             <li><Link to="/managers">Managers</Link></li>
             <li><Link to="/screens">Screens</Link></li>
             <li><Link to="/showings">Showings</Link></li>

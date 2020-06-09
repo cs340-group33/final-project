@@ -4,12 +4,12 @@ const express = require('express');
 const router = express.Router();
 
 
-const Theater = require('../queries/theaters');
+const Manager = require('../queries/managers');
 
 
 router.get('/', async (req, res) => {
   try {
-    let response = await Theater.findAll();
+    let response = await Manager.findAll();
 
     res.status(200).json(response.rows);
   } catch (e) {
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   console.log(req.body);
   try {
-    await Theater.addOne(req.body);
+    await Manager.addOne(req.body);
 
     res.status(200);
   } catch (e) {
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    await Theater.deleteOne(req.params.id);
+    await Manager.deleteOne(req.params.id);
 
     res.status(200);
   } catch (e) {

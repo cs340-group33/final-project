@@ -11,6 +11,7 @@ import Managers from "./components/Managers";
 import Movies from "./components/Movies";
 import Screens from "./components/Screens";
 import Showing from "./components/Showing";
+import TMs from "./components/Theater-Manager";
 
 
 
@@ -35,6 +36,8 @@ function App() {
         </Route>
         <Route path="/showings">
           <Showing/>
+        </Route><Route path="/tms">
+          <TMs/>
         </Route>
         <Route path="/">
           <SplashPage />
