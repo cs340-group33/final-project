@@ -1,12 +1,13 @@
-require('dotenv').config();
+/*
+* Managers API Page that directs asynchronous queries
+*/
 
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-
-
 const Manager = require('../queries/managers');
 
-
+/* Basic GET route that will get all data. This is used to display tables*/
 router.get('/', async (req, res) => {
   try {
     let response = await Manager.findAll();
@@ -17,6 +18,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+/* Basic POST route used to add one item*/
 router.post('/', async (req, res) => {
   console.log(req.body);
   try {
@@ -28,6 +30,7 @@ router.post('/', async (req, res) => {
   }
 });
 
+/* Basic DELETE route used to delete one item with the specified id*/
 router.delete('/:id', async (req, res) => {
   try {
     await Manager.deleteOne(req.params.id);

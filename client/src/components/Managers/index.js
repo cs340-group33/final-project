@@ -1,3 +1,8 @@
+/*
+* Managers page that pulls the associated data list from the database and renders it to the user
+* Allowing them to interact with the data
+* */
+
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -19,12 +24,16 @@ class Managers extends React.Component {
     event.preventDefault();
     const newManager = new FormData(event.target);
   }
+
+  //Allows fields to be changed
   handleChange = (field, event) => {
     this.setState({
       [field]: event.target.value
     })
   }
 
+  //Allows the addition of one element by taking in the components and passing them to the
+  //backend API
   handleSubmitAdd = async (event) =>{
     event.preventDefault();
 
@@ -46,14 +55,18 @@ class Managers extends React.Component {
         console.log(e);
       }
     });
+    //New data is collected and displayed
     this.getAndSaveData();
     this.renderManagers();
 
+    //Clears form data
     this.setState(
       {first_name: '',
         last_name: ''});
   }
 
+  //similar to add, this takes the manager_ID information and passes it to the backend API
+  //After this the new list is then rendered
   handleDelete = (manager_ID) => async () =>{
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
 
@@ -70,6 +83,8 @@ class Managers extends React.Component {
     this.renderManagers();
   }
 
+  //Renders the selected managers as long as the table is not loading
+  //loading means it is still talking to the backend
   renderManagers () {
     if(!this.state.isLoading){
       return this.state.data.map((managers) => {
@@ -88,6 +103,7 @@ class Managers extends React.Component {
     }
   }
 
+  //Collects all of the data by  making a call to the backend and storing this locally so that it can be displayed
   getAndSaveData(){
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
     this.setState( async () => {
@@ -110,8 +126,8 @@ class Managers extends React.Component {
     this.getAndSaveData();
   }
 
+  //This renders the entire page, items in {} are conditionally rendered depending on their state
   render() {
-
     return (
       <PageContainer>
         <SideBarNav>
@@ -159,6 +175,8 @@ class Managers extends React.Component {
   }
 }
 
+//Styled Component Elements are defined below
+
 const PageContainer = styled.div`
   display: flex;
   min-height: 100vh;
@@ -166,8 +184,6 @@ const PageContainer = styled.div`
   align-items: stretch;
 
 `;
-
-
 
 const TheaterTable = styled.div`
    table {

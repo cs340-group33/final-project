@@ -1,3 +1,7 @@
+/*
+* Generic dashboard page that shows the nav bar and directs the user to their selected pages
+* */
+
 import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
@@ -29,6 +33,8 @@ class Dashboard extends React.Component {
     )
   }
 }
+
+//Styled Component Elements are defined below
 
 const PageContainer = styled.div`
   display: flex;

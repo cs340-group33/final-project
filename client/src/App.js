@@ -14,7 +14,7 @@ import Showing from "./components/Showing";
 import TMs from "./components/Theater-Manager";
 
 
-
+//General router for the React App that allows different pages to be displayed
 function App() {
   return (
     <Router>

@@ -1,3 +1,9 @@
+/*
+* Showing page that pulls the associated data list from the database and renders it to the user
+* Allowing them to interact with the data
+* */
+
+
 import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
@@ -13,11 +19,13 @@ class Showing extends React.Component {
     };
   }
 
+  //general handle submit
   handleSubmit(event){
     event.preventDefault();
     const newScreen = new FormData(event.target);
   }
 
+  //Calls the backend to get and save all the data so the front end can render it
   getAndSaveData(){
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
     this.setState( async () => {
@@ -38,10 +46,12 @@ class Showing extends React.Component {
     })
   }
 
+  //once the components mount the data is fetched
   componentDidMount() {
     this.getAndSaveData();
   }
 
+  //Once the data has been saved locally and we are not loading the showings can be mapped into a table
   renderShowings(){
     if(!this.state.isLoading){
       return this.state.data.map((data) => {
@@ -69,6 +79,7 @@ class Showing extends React.Component {
     }
   }
 
+  //This renders the entire page, items in {} are conditionally rendered depending on their state
   render() {
     return (
       <PageContainer>
@@ -115,6 +126,8 @@ class Showing extends React.Component {
     )
   }
 }
+
+//Styled Component Elements are defined below
 
 const PageContainer = styled.div`
   display: flex;

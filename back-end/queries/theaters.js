@@ -1,6 +1,12 @@
+/*
+* Queries Page for Theaters
+*/
+
+
 require('dotenv').config();
 const { pool } = require('../config');
 
+//Finds all theaters
 async function findAll() {
   const query = 'SELECT theater_id, theater_name, street, city, zip FROM theater';
   try {
@@ -11,6 +17,7 @@ async function findAll() {
   }
 }
 
+//Adds one theater
 async function addOne(theaterInfo) {
   const query = 'INSERT INTO theater (theater_name, street, city, zip) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING';
   const { theater_name, street, city, zip } = theaterInfo;
@@ -23,6 +30,7 @@ async function addOne(theaterInfo) {
   }
 }
 
+//deletes one theater
 async function deleteOne(theater_ID) {
   try {
     await pool.query(

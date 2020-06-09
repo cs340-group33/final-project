@@ -38,17 +38,17 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+// configure the app to use bodyParser()
 app.use(logger('dev'));
 app.use(bodyParser.json());
-// configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../dist')))
-
 app.use(cookieParser());
 
+//directs front end to appropriate router
 app.use('/theaters', theaterRouter);
 app.use('/tms', TMSRouter);
 app.use('/managers', managerRouter);

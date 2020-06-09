@@ -1,6 +1,12 @@
+/*
+* Queries Page for Showings
+*/
+
+
 require('dotenv').config();
 const { pool } = require('../config');
 
+//Finds all showings
 async function findAll() {
   const query = 'SELECT t.theater_name, ts.screen_id, start_time, showing_id, title ' +
     'FROM theater as t ' +

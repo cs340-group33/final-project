@@ -1,3 +1,9 @@
+/*
+* This will be the Side Bar Navigator for the entire site. It will be
+* reused for each page that we have
+* */
+
+
 import React from 'react';
 import styled from 'styled-components';
 import Logo from '../svg/logo.svg'
@@ -6,6 +12,7 @@ import {
   Link
 } from "react-router-dom";
 
+//It provides basic navigation the rest of the site
 class SideBarNav extends React.Component {
   render() {
     return (
@@ -29,6 +36,8 @@ class SideBarNav extends React.Component {
     )
   }
 }
+
+//Styled Component Elements are defined below
 
 const LeftBox = styled.div`
   display: flex;

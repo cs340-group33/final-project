@@ -1,9 +1,16 @@
+/*
+* Theaters page that pulls the associated data list from the database and renders it to the user
+* Allowing them to interact with the data
+* */
+
+
 import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
 import axios from 'axios';
 import { Button } from '@material-ui/core';
 
+//Basic class definition
 class Theaters extends React.Component {
   constructor(props) {
     super(props);
@@ -18,12 +25,13 @@ class Theaters extends React.Component {
     };
   }
 
+  /*This function handles the call to the backend API to make ad a theater*/
   handleSubmitAdd = async (event) =>{
     event.preventDefault();
 
+    //Direct the URL depending if it is on Heroku or local
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
 
-    
       this.setState({isError: false});
       const config = {
         'Content-Type': 'application/json',
@@ -43,9 +51,11 @@ class Theaters extends React.Component {
           console.log(e);
         }
       });
+      //After the data has been added to the backend we re-get the data and re-render the display table
       this.getAndSaveData();
       this.renderTheaters();
 
+      //This clears our forms as they are not reset automatically
     this.setState(
       {newName: '',
       newStreet: '',
@@ -53,20 +63,20 @@ class Theaters extends React.Component {
       newZip: '',});
   }
 
-
+  //This handles our props state change
   handleChange = (field, event) => {
     this.setState({
       [field]: event.target.value
     })
   }
+  //This is a special props state change for the zip to only let it be numbers
   handleChangeZip(event){
     const newZip = (event.target.validity.valid) ? event.target.value : this.state.newZip;
 
     this.setState({ newZip });
   }
 
-
-
+  //Calls the backend to get and save all the data so the front end can render it
   getAndSaveData(){
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
     this.setState( async () => {
@@ -86,10 +96,12 @@ class Theaters extends React.Component {
     })
   }
 
+  //React component that loads once it mounts
   componentDidMount() {
     this.getAndSaveData();
   }
 
+  //handles the delete button by taking the theater ID of the selected button and passing it to the backend API to delete that selected item
   handleDelete = (theater_id) => async () =>{
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
 
@@ -111,6 +123,7 @@ class Theaters extends React.Component {
 
   }
 
+  //Once the data has been saved locally and we are not loading the theaters can be mapped into a table
   renderTheaters () {
     if(!this.state.isLoading){
       return this.state.data.map((theaters) => {
@@ -136,6 +149,7 @@ class Theaters extends React.Component {
     }
   }
 
+  //This renders the entire page, items in {} are conditionally rendered depending on their state
   render() {
     return (
       <PageContainer>
@@ -198,6 +212,8 @@ class Theaters extends React.Component {
   }
 }
 
+//Styled Component Elements are defined below
+
 const PageContainer = styled.div`
   display: flex;
   min-height: 100vh;
@@ -219,12 +235,6 @@ const TheaterTable = styled.div`
    border: 1px solid black;
    padding: 5px;
   }
-`;
-
-const ErrorBox = styled.div`
-  align-items: center;
-  font-weight: bold;
-  color: red;
 `;
 
 const RightBox = styled.div`

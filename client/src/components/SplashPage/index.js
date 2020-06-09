@@ -1,8 +1,9 @@
+
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
-
+//Splash page that providse a little information about the project
 class SplashPage extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +23,8 @@ class SplashPage extends React.Component {
     )
   }
 }
+
+//Styled Component Elements are defined below
 
 const SplashContainer = styled.div`
   display:flex;

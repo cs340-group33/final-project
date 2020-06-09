@@ -1,3 +1,9 @@
+/*
+* Theaters-Managers page that pulls the associated data list from the database and renders it to the user
+* Allowing them to interact with the data
+* */
+
+
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -14,18 +20,20 @@ class TMs extends React.Component {
       managers: []
     };
   }
+  //handles basic sumbit
   handleSubmit(event){
     event.preventDefault();
     const newManager = new FormData(event.target);
   }
+
+  //handles default change of any field
   handleChange = (field, event) => {
     this.setState({
       [field]: event.target.value
     })
   }
 
-
-
+  //Once the data has been saved locally and we are not loading the manager theaters can be mapped into a table
   renderTMs () {
     if(!this.state.isLoading){
       return this.state.data.map((tms, i) => {
@@ -60,6 +68,7 @@ class TMs extends React.Component {
     }
   }
 
+  //Calls the backend to get and save all the data so the front end can render it
   getAndSaveData(){
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
     this.setState( async () => {
@@ -78,10 +87,12 @@ class TMs extends React.Component {
     })
   }
 
+  //React component that loads once it mounts
   componentDidMount() {
     this.getAndSaveData();
   }
 
+  //This renders the entire page, items in {} are conditionally rendered depending on their state
   render() {
     return (
       <PageContainer>
@@ -123,6 +134,8 @@ class TMs extends React.Component {
   }
 }
 
+//Styled Component Elements are defined below
+
 const PageContainer = styled.div`
   display: flex;
   min-height: 100vh;
@@ -130,8 +143,6 @@ const PageContainer = styled.div`
   align-items: stretch;
 
 `;
-
-
 
 const TheaterTable = styled.div`
    table {

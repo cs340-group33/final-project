@@ -1,6 +1,13 @@
+/*
+* Queries Page for Screens
+*/
+
+
 require('dotenv').config();
 const { pool } = require('../config');
 
+
+// Finds all Screens
 async function findAll() {
   const query = 'SELECT t.theater_name, ts.screen_ID, seats ' +
                 'FROM theater as t ' +

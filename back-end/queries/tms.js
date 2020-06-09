@@ -1,6 +1,12 @@
+/*
+* Queries Page for Theater-Managers
+*/
+
+
 require('dotenv').config();
 const { pool } = require('../config');
 
+//Finds all Theater-Manager relationships
 async function findAll() {
   const query = 'SELECT t.theater_name, trm.first_name, trm.last_name ' +
   'FROM theater as t ' +

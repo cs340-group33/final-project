@@ -1,3 +1,8 @@
+/*
+* Movies page that pulls the associated data list from the database and renders it to the user
+* Allowing them to interact with the data
+* */
+
 import React from 'react';
 import styled from 'styled-components';
 import SideBarNav from "../../Shared/SideNavBar";
@@ -22,6 +27,8 @@ class Movies extends React.Component {
     };
   }
 
+  //Here we handle the search component by reaching out to the backend API with the search criteron
+  //Once those search results are recieved it then passes them to be rendered
   handleSubmitSearch = async (event) =>{
     event.preventDefault();
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
@@ -45,14 +52,19 @@ class Movies extends React.Component {
         console.log(e);
       }
     });
+    //passes selected movies to be rendered
     this.renderMovies();
+    //clears the search box
     this.setState({searchTitle: ''});
   }
+
+  //Allows change in the search bar
   handleChangeSearch= (event) => {
     this.setState({searchTitle: event.target.value});
   }
 
-
+  //This handles adding of a movie by reaching out to the backend API with the title
+  // after the backend checks back the table is then re-rendered
   handleSubmitAdd = async (event) =>{
     event.preventDefault();
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
@@ -72,14 +84,20 @@ class Movies extends React.Component {
         console.log(e);
       }
     });
+
+    //gets the table data agin and renders it
     this.getAndSaveData();
     this.renderMovies();
+    //sets the title bar to empty
     this.setState({newMovieTitle: ''});
   }
+  //Allows for change of movie title
   handleChangeMovie = (event) => {
     this.setState({newMovieTitle: event.target.value});
   }
 
+  //Handles delete by taking in the movie_ID that is going to be deleted and passing that to the
+  //Backend API where that movie will be deleted. After this the movies will be rerendered
   handleDelete = (movie_id) => async () =>{
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
 
@@ -96,12 +114,14 @@ class Movies extends React.Component {
     this.renderMovies();
   }
 
+  //Allows the show all button to function by collecting all the movies and then rendering them
   handleShowAll = (event) => {
     event.preventDefault();
     this.getAndSaveData();
     this.renderMovies();
   }
 
+  //Displays all of the movies not showing by making a backend API call and then rendering those movies
   handleDisplayNotShowing = (event) => {
     event.preventDefault();
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
@@ -123,6 +143,7 @@ class Movies extends React.Component {
     this.renderMovies();
   }
 
+  //Collects all of the movies in the database using a backend API call
   getAndSaveData(){
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://cs340-final.herokuapp.com';
     this.setState( async () => {
@@ -142,6 +163,8 @@ class Movies extends React.Component {
     })
   }
 
+  //Renders that selected movies, only if the page is not loading
+  //loading means the page is still talking to the backend
   renderMovies () {
     if(!this.state.isLoading){
       return this.state.movies.map((movies) => {
@@ -169,8 +192,9 @@ class Movies extends React.Component {
     this._isMounted = false;
   }
 
-  render() {
 
+  //Renders the page {} items are conditionally rendered
+  render() {
     return (
       <PageContainer>
         <SideBarNav>
@@ -233,6 +257,8 @@ class Movies extends React.Component {
     )
   }
 }
+
+//Styled Component Elements are defined below
 
 const PageContainer = styled.div`
   display: flex;

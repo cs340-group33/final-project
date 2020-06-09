@@ -1,6 +1,13 @@
+/*
+* Queries Page for Managers
+*/
+
+
 require('dotenv').config();
 const { pool } = require('../config');
 
+
+//Finds all items and returns them
 async function findAll() {
   const query = 'SELECT manager_ID, first_name, last_name FROM manager';
   try {
@@ -11,7 +18,7 @@ async function findAll() {
   }
 }
 
-
+//adds one item to the database
 async function addOne(managerInfo) {
   const query = 'INSERT INTO manager (first_name, last_name) VALUES ($1, $2) ON CONFLICT DO NOTHING';
   const { first_name, last_name } = managerInfo;
@@ -24,6 +31,7 @@ async function addOne(managerInfo) {
   }
 }
 
+//deletes one item to the database
 async function deleteOne(manager_ID) {
   try {
     return await pool.query(
